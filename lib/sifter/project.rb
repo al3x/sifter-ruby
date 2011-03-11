@@ -22,6 +22,13 @@ class Sifter::Project < Hashie::Dash
       fetch("issues", []).
       map { |i| Sifter::Issue.new(i) }
   end
+  
+  def issue(issue_id)
+    project_id = api_url.split('/').last
+    
+    Sifter.
+      get("/api/projects/#{project_id}/issues/#{issue_id}")["issue"]
+  end
 
   # Fetch all the milestones for this project. Returns an array of
   # Sifter::Milestone objects.
